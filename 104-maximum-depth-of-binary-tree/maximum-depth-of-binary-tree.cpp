@@ -11,8 +11,13 @@
  */
 class Solution {
 public:
+    int maxim(TreeNode* root){
+        if(!root) return -1;
+        int lheight = maxim(root->left);
+        int rheight = maxim(root->right);
+        return max(lheight,rheight)+1;
+    }
     int maxDepth(TreeNode* root) {
-        if(!root) return 0;
-        return 1+ max(maxDepth(root->left),maxDepth(root->right));
+        return maxim(root)+1;
     }
 };
