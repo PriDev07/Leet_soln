@@ -1,15 +1,16 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        vector<int> s_hash(26,0), t_hash(26,0);
-        if(s.size()!=t.size()) return false;
+        vector<int>cnt(26,0);
+        if(s.size()!=t.size()) return 0;
+        if(s==t) return 1;
         for(int i=0;i<s.size();i++){
-            s_hash[s[i]-'a']+=1;
-            t_hash[t[i]-'a']+=1;
+            cnt[s[i]-'a']++;
+            cnt[t[i]-'a']--;
         }
         for(int i=0;i<26;i++){
-            if(s_hash[i]!=t_hash[i]) return false;
+            if(cnt[i]!=0) return 0;
         }
-        return true;
+        return 1;
     }
 };
