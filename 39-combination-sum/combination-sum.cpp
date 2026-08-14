@@ -1,22 +1,22 @@
 class Solution {
 public:
-    void bactT(vector<int>& candidates, int idx, int target, vector<int> &res,vector<vector<int>> & ans){
-        if(idx == candidates.size()){
-            if(target==0){
-                ans.push_back(res);
+    void solve(vector<int>& candidates, int target,vector<vector<int>>& ans,vector<int>&curr,int idx){
+        if(target==0){
+                ans.push_back(curr);
+                return;
             }
-            return;
-        }
+            if(idx>=candidates.size()) return;
         if(target<0) return;
-        res.push_back(candidates[idx]);
-        bactT(candidates,idx,target-candidates[idx],res,ans);
-        res.pop_back();
-        bactT(candidates,idx+1,target,res,ans);
+        for(int i=idx;i<candidates.size();i++){
+            curr.push_back(candidates[i]);
+            solve(candidates,target-candidates[i],ans,curr,i);
+            curr.pop_back();
+        }
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> ans;
-        vector<int>res;
-        bactT(candidates,0,target,res,ans);
+        vector<int>curr;
+        solve(candidates,target,ans,curr,0);
         return ans;
     }
 };
