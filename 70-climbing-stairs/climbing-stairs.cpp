@@ -1,13 +1,13 @@
 class Solution {
 public:
-    int fib(int n,vector<int> & val){
-        if(n==0 || n==1) return 1;
-        if(val[n]!=-1) return val[n];
-        return val[n]=fib(n-1,val)+fib(n-2,val);
+    int solve(vector<int>& dp,int n){
+        if(n<=1) return 1;
+        if(dp[n]!=-1) return dp[n];
+        return dp[n]=solve(dp,n-1)+solve(dp,n-2);
     }
     int climbStairs(int n) {
-        vector<int>val(n+1,-1);
-        int ans = fib(n,val);
+        vector<int>dp(n+1,-1);
+        int ans = solve(dp,n);
         return ans;
     }
 };
