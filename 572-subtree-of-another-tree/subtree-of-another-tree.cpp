@@ -11,20 +11,21 @@
  */
 class Solution {
 public:
-    bool isIdentical(TreeNode* r1, TreeNode* r2){
-        if(!r1 && !r2) return 1;
-        if((!r1&&r2)||(!r2&&r1)) return 0;
-        if(r1->val!=r2->val) return 0;
-        return isIdentical(r1->left,r2->left)&&isIdentical(r1->right,r2->right);
-    }
+ bool isSame(TreeNode* p, TreeNode* q){
+    if(!p && !q ) return true;
+    if(!p || !q) return false;
+    if(p->val != q->val) return false;
+    bool left = isSame(p->left,q->left);
+    bool right = isSame(p->right,q->right);
+    return left && right;
+ }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-    if (!root) return false;
-
-    if (isIdentical(root, subRoot))
-        return true;
-
-    return isSubtree(root->left, subRoot) ||
-           isSubtree(root->right, subRoot);
-        
+        if(!root) return false;
+        if (isSame(root, subRoot)) {
+    return true;
+}
+        bool left = isSubtree(root->left,subRoot);
+        bool right = isSubtree(root->right,subRoot);
+        return left | right;
     }
 };
