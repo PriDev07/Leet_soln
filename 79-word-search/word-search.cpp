@@ -1,14 +1,17 @@
 class Solution {
 public:
-    bool solve(vector<vector<char>>& board, string word, int idx, int i,int j){
-        if(idx==word.size()) return true;
-        if(i>=board.size() || j>=board[0].size() || i <0 || j<0) return false;
-        if(board[i][j]!= word[idx]) return false; 
-        char curr = board[i][j];
-        board[i][j]='#';
-        bool found = solve(board,word,idx+1,i+1,j) || solve(board,word,idx+1,i,j+1) ||solve(board,word,idx+1,i-1,j) || solve(board,word,idx+1,i,j-1);
-        board[i][j]=curr;
-        return found;
+    bool solve(vector<vector<char>>& board, string& word,int r, int c, int i){
+        if(r>=board.size() || c>=board[0].size()|| r<0 || c<0) return false;
+        if(board[r][c]!=word[i]) return false;
+        if(i==word.size()-1) return true;
+        char temp = board[r][c];
+        board[r][c]= '#';
+        bool top = solve(board,word,r-1,c,i+1);
+        bool bottom = solve(board,word,r+1,c,i+1);
+        bool left = solve(board,word,r,c-1,i+1);
+        bool right = solve(board,word,r,c+1,i+1);
+        board[r][c]=temp;
+        return top || bottom || left || right;
     }
     bool exist(vector<vector<char>>& board, string word) {
         int n = board.size();
@@ -16,9 +19,7 @@ public:
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(board[i][j]==word[0]){
-                    if(solve(board,word,0,i,j)){
-                        return true;
-                    }
+                     if(solve(board,word,i,j,0)) return true;
                 }
             }
         }
