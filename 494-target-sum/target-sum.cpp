@@ -1,16 +1,16 @@
 class Solution {
 public:
-    int solve(vector<int>& nums, int target,int idx,int ans){
+    int solve(vector<int>& nums, int target, int idx){
         if(idx==nums.size()){
-            if(target==0){
-            return 1;
-            }
-            return 0;
+            if(target==0) return 1;
+            else return 0;
         }
-        ans += solve(nums,target-nums[idx],idx+1,ans) + solve(nums,target+nums[idx],idx+1,ans);
-        return ans;
+        int take = solve(nums,target-nums[idx],idx+1);
+        int notTake = solve(nums,target+nums[idx],idx+1);
+        return take+notTake;
     }
+
     int findTargetSumWays(vector<int>& nums, int target) {
-        return solve(nums,target,0,0);
+        return solve(nums,target,0);
     }
 };
